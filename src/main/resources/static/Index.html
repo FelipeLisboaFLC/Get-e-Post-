@@ -1,0 +1,1064 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CineSenai - Adicionar Filme</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --red: #e50914;
+      --red-dark: #7a0a10;
+      --blue: #0b5cab;
+      --blue-light: #2f8be6;
+      --muted: #d4d4d4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: "Poppins", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .logo .cine {
+      color: #fff;
+    }
+
+    .logo .senai {
+      color: var(--red);
+    }
+
+    /* HEADER */
+
+    header {
+      border-bottom: 2px solid var(--red);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .header-inner .logo {
+      font-size: 2rem;
+      padding: 6px 14px;
+      border: 1px solid var(--red-dark);
+      border-radius: 10px;
+      background: #140506;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav a {
+      font-size: .8rem;
+      font-weight: 600;
+      transition: color .2s;
+    }
+
+    nav a:hover,
+    nav a.ativo {
+      color: var(--red);
+    }
+
+    /* MAIN */
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .page-title {
+      text-align: center;
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      font-size: 2.6rem;
+      letter-spacing: 1px;
+      margin: 10px 0 40px;
+    }
+
+    .page-title span {
+      color: var(--red);
+    }
+
+    h2.sub {
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin: 60px 0 20px;
+    }
+
+    h2.sub span {
+      color: var(--red);
+    }
+
+    /* FORMULÁRIO */
+
+    .form-card {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      justify-content: center;
+      background: #111;
+      border: 1px solid #2a0a0d;
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .preview-col {
+      flex: 0 0 auto;
+      text-align: center;
+    }
+
+    .poster {
+      width: 200px;
+      aspect-ratio: 2/3;
+      padding: 5px;
+      border: 2px solid var(--red-dark);
+      background: #1a0709;
+      box-shadow: 0 0 25px rgba(229, 9, 20, .25);
+    }
+
+    .poster-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #2a2a2a, #111);
+      display: grid;
+      place-items: center;
+      color: #777;
+      font-size: .75rem;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .poster-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .file-btn {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--blue-light);
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .file-btn:hover {
+      background: rgba(47, 139, 230, .15);
+    }
+
+    #arquivo {
+      display: none;
+    }
+
+    form {
+      flex: 1 1 380px;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .linha {
+      display: flex;
+      gap: 14px;
+    }
+
+    .linha > div {
+      flex: 1;
+      min-width: 0;
+    }
+
+    label {
+      font-size: .75rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    label small {
+      font-weight: 400;
+      color: #999;
+    }
+
+    input[type=text],
+    input[type=url],
+    textarea,
+    select {
+      width: 100%;
+      font-family: inherit;
+      font-size: .85rem;
+      color: #fff;
+      background: #0b0b0b;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--red);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.5;
+    }
+
+    /* BOTÕES */
+
+    .btn {
+      font-family: inherit;
+      font-size: .8rem;
+      font-weight: 600;
+      padding: 11px 30px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .15s, background .2s;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-play {
+      background: var(--blue);
+      border: 1px solid var(--blue);
+      color: #fff;
+    }
+
+    .btn-play:hover {
+      background: var(--blue-light);
+      border-color: var(--blue-light);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid #444;
+      color: #fff;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .msg {
+      font-size: .8rem;
+      min-height: 1.2em;
+    }
+
+    .msg.ok {
+      color: #4ade80;
+    }
+
+    .msg.erro {
+      color: #ff6b6b;
+    }
+
+    /* CLASSIFICAÇÃO */
+
+    .classif {
+      display: inline-grid;
+      place-items: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 6px;
+      border-radius: 5px;
+      font-size: .7rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .classif-L {
+      background: #1fa34a;
+    }
+
+    .classif-6 {
+      background: #0a8bd6;
+    }
+
+    .classif-10 {
+      background: #0a8bd6;
+    }
+
+    .classif-12 {
+      background: #e5b800;
+      color: #111;
+    }
+
+    .classif-14 {
+      background: #ef7d00;
+    }
+
+    .classif-16 {
+      background: #d62828;
+    }
+
+    .classif-18 {
+      background: #111;
+      border: 1px solid #555;
+    }
+
+    /* LISTA DE FILMES */
+
+    .lista {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #111;
+      border: 1px solid #2a0a0d;
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+
+    .item .mini {
+      width: 50px;
+      aspect-ratio: 2/3;
+      flex: 0 0 auto;
+      border: 1px solid var(--red-dark);
+      background: #222;
+      overflow: hidden;
+    }
+
+    .item .mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .item .txt {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item .titulo-linha {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .item .txt strong {
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      font-size: 1.3rem;
+      letter-spacing: .5px;
+    }
+
+    .item .txt .gen {
+      display: block;
+      font-size: .7rem;
+      color: #9a9a9a;
+      margin-bottom: 2px;
+    }
+
+    .item .txt .sin {
+      display: block;
+      font-size: .7rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .vazio {
+      color: #888;
+      font-size: .85rem;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 2px solid var(--red);
+    }
+
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .footer-inner .logo {
+      font-size: 2.2rem;
+    }
+
+    /* RESPONSIVIDADE */
+
+    @media (max-width: 760px) {
+      .header-inner {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      nav {
+        gap: 18px;
+      }
+
+      .page-title {
+        font-size: 2.2rem;
+      }
+
+      .form-card {
+        flex-direction: column;
+        align-items: center;
+        padding: 22px 16px;
+      }
+
+      form {
+        width: 100%;
+        max-width: none;
+      }
+
+      .linha {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <a href="index.html" class="logo" aria-label="CineSenai">
+      <span class="cine">cine</span>
+      <span class="senai">senai</span>
+    </a>
+
+    <nav>
+      <a href="index.html">Lista de filmes</a>
+      <a href="adicionar.html" class="ativo">Adicionar filme</a>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+
+  <h1 class="page-title">
+    Adicionar <span>Filme</span>
+  </h1>
+
+  <div class="form-card">
+
+    <!-- FOTO DO FILME -->
+
+    <div class="preview-col">
+
+      <div class="poster">
+        <div class="poster-inner" id="previa">
+          Pré-visualização da foto
+        </div>
+      </div>
+
+      <label for="arquivo" class="file-btn">
+        Escolher foto
+      </label>
+
+      <input type="file" id="arquivo" accept="image/*">
+
+    </div>
+
+    <!-- FORMULÁRIO -->
+
+    <form id="form" autocomplete="off">
+
+      <div>
+        <label for="titulo">Título</label>
+
+        <input
+                type="text"
+                id="titulo"
+                maxlength="80"
+                required
+                placeholder="Ex.: Duna"
+        >
+      </div>
+
+      <div class="linha">
+
+        <div>
+          <label for="genero">Gênero</label>
+
+          <input
+                  type="text"
+                  id="genero"
+                  list="generos"
+                  maxlength="60"
+                  required
+                  placeholder="Ex.: Ficção científica"
+          >
+
+          <datalist id="generos">
+            <option value="Ação">
+            <option value="Aventura">
+            <option value="Animação">
+            <option value="Comédia">
+            <option value="Drama">
+            <option value="Fantasia">
+            <option value="Ficção científica">
+            <option value="Romance">
+            <option value="Suspense">
+            <option value="Terror">
+          </datalist>
+        </div>
+
+        <!-- ENUM CLASSIFICACAO -->
+
+        <div>
+          <label for="classificacao">Classificação</label>
+
+          <select id="classificacao" required>
+
+            <option value="">Selecione</option>
+
+            <option value="Livre">Livre</option>
+
+            <option value="Seis_anos">6 anos</option>
+
+            <option value="Dez_anos">10 anos</option>
+
+            <option value="Doze_anos">12 anos</option>
+
+            <option value="Quatorze_anos">14 anos</option>
+
+            <option value="Dezesseis_anos">16 anos</option>
+
+            <option value="Dezoito_anos">18 anos</option>
+
+          </select>
+        </div>
+
+      </div>
+
+      <div>
+        <label for="sinopse">Sinopse</label>
+
+        <textarea
+                id="sinopse"
+                maxlength="400"
+                required
+                placeholder="Conte rapidamente sobre o que é o filme..."
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="fotoUrl">
+          Ou link da foto
+          <small>(use no lugar de escolher um arquivo)</small>
+        </label>
+
+        <input
+                type="url"
+                id="fotoUrl"
+                placeholder="https://..."
+        >
+      </div>
+
+      <div class="msg" id="msg" role="status"></div>
+
+      <div class="actions">
+
+        <button type="submit" class="btn btn-play">
+          Adicionar filme
+        </button>
+
+        <button type="reset" class="btn btn-ghost" id="limpar">
+          Limpar
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- FILMES CADASTRADOS -->
+
+  <h2 class="sub">
+    Filmes <span>cadastrados</span>
+  </h2>
+
+  <div class="lista" id="lista">
+    <p class="vazio">Carregando filmes...</p>
+  </div>
+
+  <div class="actions" style="margin-top:28px; justify-content:center;">
+
+    <a href="index.html" class="btn btn-play">
+      Ver lista de filmes
+    </a>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+
+        <span class="logo">
+            <span class="cine">CINE</span>
+            <span class="senai">SENAI</span>
+        </span>
+
+  </div>
+</footer>
+
+<script>
+
+  // ENDEREÇO DA API
+
+  const API_URL = "http://localhost:8080/Filmes";
+
+  // ELEMENTOS DO HTML
+
+  const form = document.getElementById("form");
+  const lista = document.getElementById("lista");
+  const msg = document.getElementById("msg");
+
+  const arquivo = document.getElementById("arquivo");
+  const previa = document.getElementById("previa");
+  const fotoUrl = document.getElementById("fotoUrl");
+
+  let fotoData = "";
+
+  // TRADUZIR CLASSIFICACAO DO ENUM
+
+  function mostrarClassificacao(classificacao) {
+
+    const classificacoes = {
+      "Livre": "Livre",
+      "Seis_anos": "6 anos",
+      "Dez_anos": "10 anos",
+      "Doze_anos": "12 anos",
+      "Quatorze_anos": "14 anos",
+      "Dezesseis_anos": "16 anos",
+      "Dezoito_anos": "18 anos"
+    };
+
+    return classificacoes[classificacao] || classificacao;
+  }
+
+  // COR DA CLASSIFICACAO
+
+  function classeClassificacao(classificacao) {
+
+    const classes = {
+      "Livre": "classif-L",
+      "Seis_anos": "classif-6",
+      "Dez_anos": "classif-10",
+      "Doze_anos": "classif-12",
+      "Quatorze_anos": "classif-14",
+      "Dezesseis_anos": "classif-16",
+      "Dezoito_anos": "classif-18"
+    };
+
+    return classes[classificacao] || "classif-18";
+  }
+
+  // MOSTRAR MENSAGEM
+
+  function mostrarMsg(texto, tipo) {
+
+    msg.textContent = texto;
+    msg.className = "msg " + (tipo || "");
+
+  }
+
+  // MOSTRAR FOTO NA PREVIA
+
+  function mostrarPrevia(src) {
+
+    previa.innerHTML = "";
+
+    if (!src) {
+
+      previa.textContent = "Pré-visualização da foto";
+      return;
+
+    }
+
+    const img = document.createElement("img");
+
+    img.src = src;
+    img.alt = "Prévia da foto";
+
+    img.onerror = () => {
+
+      previa.textContent = "Não foi possível carregar a imagem";
+
+    };
+
+    previa.appendChild(img);
+
+  }
+
+  // REDUZIR IMAGEM
+
+  function reduzirImagem(file, larguraMax = 400) {
+
+    return new Promise((resolve, reject) => {
+
+      const leitor = new FileReader();
+
+      leitor.onerror = reject;
+
+      leitor.onload = () => {
+
+        const img = new Image();
+
+        img.onerror = reject;
+
+        img.onload = () => {
+
+          const escala = Math.min(1, larguraMax / img.width);
+
+          const canvas = document.createElement("canvas");
+
+          canvas.width = Math.round(img.width * escala);
+          canvas.height = Math.round(img.height * escala);
+
+          canvas.getContext("2d").drawImage(
+                  img,
+                  0,
+                  0,
+                  canvas.width,
+                  canvas.height
+          );
+
+          resolve(canvas.toDataURL("image/jpeg", 0.82));
+
+        };
+
+        img.src = leitor.result;
+
+      };
+
+      leitor.readAsDataURL(file);
+
+    });
+
+  }
+
+  // ESCOLHER FOTO DO COMPUTADOR
+
+  arquivo.addEventListener("change", async () => {
+
+    const file = arquivo.files[0];
+
+    if (!file) return;
+
+    try {
+
+      fotoData = await reduzirImagem(file);
+
+      fotoUrl.value = "";
+
+      mostrarPrevia(fotoData);
+      mostrarMsg("", "");
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      mostrarMsg("Não consegui ler essa imagem.", "erro");
+
+    }
+
+  });
+
+  // ESCOLHER FOTO POR LINK
+
+  fotoUrl.addEventListener("input", () => {
+
+    if (fotoUrl.value.trim()) {
+
+      fotoData = "";
+      arquivo.value = "";
+
+      mostrarPrevia(fotoUrl.value.trim());
+
+    } else if (!fotoData) {
+
+      mostrarPrevia("");
+
+    }
+
+  });
+
+  // LIMPAR FOTO E PREVIA
+
+  form.addEventListener("reset", () => {
+
+    fotoData = "";
+    arquivo.value = "";
+
+    mostrarPrevia("");
+    mostrarMsg("", "");
+
+  });
+
+  // LISTAR FILMES
+
+  async function carregarFilmes() {
+
+    try {
+
+      const resposta = await fetch(API_URL);
+
+      if (!resposta.ok) {
+
+        throw new Error("Erro ao buscar filmes");
+
+      }
+
+      const filmes = await resposta.json();
+
+      lista.innerHTML = "";
+
+      if (filmes.length === 0) {
+
+        lista.innerHTML =
+                '<p class="vazio">Nenhum filme cadastrado ainda.</p>';
+
+        return;
+
+      }
+
+      filmes.forEach(filme => {
+
+        const item = document.createElement("div");
+        item.className = "item";
+
+        // FOTO
+
+        const mini = document.createElement("div");
+        mini.className = "mini";
+
+        if (filme.foto) {
+
+          const img = document.createElement("img");
+
+          img.src = filme.foto;
+          img.alt = filme.titulo;
+
+          mini.appendChild(img);
+
+        }
+
+        // INFORMACOES
+
+        const txt = document.createElement("div");
+        txt.className = "txt";
+
+        const linha = document.createElement("div");
+        linha.className = "titulo-linha";
+
+        // SELO DA CLASSIFICACAO
+
+        const selo = document.createElement("span");
+
+        selo.className = "classif " +
+                classeClassificacao(filme.classificacao);
+
+        selo.textContent =
+                mostrarClassificacao(filme.classificacao);
+
+        // TITULO
+
+        const titulo = document.createElement("strong");
+
+        titulo.textContent = filme.titulo;
+
+        linha.append(selo, titulo);
+
+        // GENERO
+
+        const genero = document.createElement("span");
+
+        genero.className = "gen";
+        genero.textContent = filme.genero;
+
+        // SINOPSE
+
+        const sinopse = document.createElement("span");
+
+        sinopse.className = "sin";
+        sinopse.textContent = filme.sinopse;
+
+        txt.append(linha, genero, sinopse);
+
+        item.append(mini, txt);
+
+        lista.appendChild(item);
+
+      });
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      lista.innerHTML =
+              '<p class="vazio">Erro ao carregar filmes. Verifique se a API está funcionando.</p>';
+
+    }
+
+  }
+
+  // CADASTRAR FILME
+
+  form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const foto = fotoData || fotoUrl.value.trim();
+
+    if (!foto) {
+
+      mostrarMsg("Escolha uma foto ou cole um link de imagem.", "erro");
+
+      return;
+
+    }
+
+    const filme = {
+
+      titulo: document.getElementById("titulo").value.trim(),
+
+      genero: document.getElementById("genero").value.trim(),
+
+      sinopse: document.getElementById("sinopse").value.trim(),
+
+      foto: foto,
+
+      classificacao: document.getElementById("classificacao").value
+
+    };
+
+    try {
+
+      const resposta = await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(filme)
+
+      });
+
+      if (!resposta.ok) {
+
+        throw new Error("Erro ao cadastrar filme");
+
+      }
+
+      mostrarMsg("Filme cadastrado com sucesso!", "ok");
+
+      form.reset();
+
+      await carregarFilmes();
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      mostrarMsg(
+              "Erro ao cadastrar filme. Verifique a API e o banco de dados.",
+              "erro"
+      );
+
+    }
+
+  });
+
+  // CARREGAR FILMES QUANDO ABRIR A PAGINA
+
+  carregarFilmes();
+
+</script>
+
+</body>
+</html>
