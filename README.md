@@ -224,26 +224,6 @@ http://localhost:8080
 
 A interface Front-end está localizada em `src/main/resources/static/Index.html` e pode ser acessada pelo navegador no endereço local da aplicação.
 
-## 🧪 Testes com Postman
-
-Os testes podem ser realizados pelo Postman utilizando os seguintes endpoints:
-
-**Teste GET:**
-
-```http
-GET http://localhost:8080/Filmes
-```
-
-Verifica se a API consegue consultar e retornar os filmes cadastrados.
-
-**Teste POST:**
-
-```http
-POST http://localhost:8080/Filmes
-```
-
-Envia os dados de um novo filme em formato JSON para verificar se o cadastro é realizado corretamente.
-
 ## 📸 Demonstração do Projeto
 
 ### Interface Front-end
