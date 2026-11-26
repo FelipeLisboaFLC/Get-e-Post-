@@ -11,7 +11,7 @@ public class Filmes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String Titulo;
+    private String titulo;
     private String genero;
     private String sinopse;
     private String foto;
@@ -21,7 +21,7 @@ public class Filmes {
     }
 
     public Filmes(String titulo, String genero, String sinopse, String foto, Classificacao classificacao) {
-        Titulo = titulo;
+        this.titulo = titulo;
         this.genero = genero;
         this.sinopse = sinopse;
         this.foto = foto;
@@ -30,7 +30,7 @@ public class Filmes {
 
     public Filmes(int id, String titulo, String genero, String sinopse, String foto, Classificacao classificacao) {
         this.id = id;
-        Titulo = titulo;
+        this.titulo = titulo;
         this.genero = genero;
         this.sinopse = sinopse;
         this.foto = foto;
@@ -42,11 +42,11 @@ public class Filmes {
     }
 
     public String getTitulo() {
-        return Titulo;
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
-        Titulo = titulo;
+        this.titulo = titulo;
     }
 
     public Classificacao getClassificacao() {
